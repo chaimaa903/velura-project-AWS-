@@ -3,13 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
-        - cd frontend
-        - rm -rf node_modules package-lock.json
-        - npm install --legacy-peer-deps
+        - ls -la
+        - cd frontend && rm -rf node_modules package-lock.json
+        - cd frontend && npm install --legacy-peer-deps
     build:
       commands:
-        - cd frontend
-        - npx next build
+        - cd frontend && npm run build
   artifacts:
     baseDirectory: frontend/.next
     files:
