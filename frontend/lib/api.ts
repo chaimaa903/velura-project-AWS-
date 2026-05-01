@@ -3,6 +3,7 @@ const BASE_URL = "https://announcer-scrambled-felt-tip.ngrok-free.dev";
 // ============ HELPERS ============
 const getAuthHeaders = () => ({
   "Content-Type": "application/json",
+  "ngrok-skip-browser-warning": "true",
   Authorization: `Bearer ${typeof window !== "undefined" ? localStorage.getItem("token") : ""}`,
 });
 
@@ -51,20 +52,29 @@ export const getItems = async (params?: {
   category?: string;
   size?: string;
   q?: string;
-  available?: boolean; 
+  available?: boolean;
 }) => {
   const query = params ? new URLSearchParams(params as any).toString() : "";
-  const res = await fetch(`${BASE_URL}/api/catalog/items${query ? "?" + query : ""}`);
+  const res = await fetch(`${BASE_URL}/api/catalog/items${query ? "?" + query : ""}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
   if (!res.ok) throw new Error("Failed to get items");
   return res.json();
 };
 
 export const getItem = async (id: number) => {
-  const res = await fetch(`${BASE_URL}/api/catalog/items/${id}`);
+  const res = await fetch(`${BASE_URL}/api/catalog/items/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "true",
+    },
+  });
   if (!res.ok) throw new Error("Item not found");
   return res.json();
 };
-
 // ============ RENTALS ============
 export const getRentals = async () => {
   const res = await fetch(`${BASE_URL}/api/rentals`, {
